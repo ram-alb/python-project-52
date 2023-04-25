@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
     'webserver',
     'localhost',
     '127.0.0.1',
+    'ram-alb-task-manager.up.railway.app',
 ]
 
 

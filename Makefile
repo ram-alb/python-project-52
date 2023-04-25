@@ -7,5 +7,5 @@ lint:
 isort:
 	poetry run isort task_manager
 
-web:
+start:
 	poetry run gunicorn task_manager.wsgi
