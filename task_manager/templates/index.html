@@ -1,17 +1,20 @@
+{% load i18n %}
+
+{% load bootstrap4 %}
+
 <!DOCTYPE html>
 <html lang="ru-ru">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Менеджер задач Hexlet</title>
-    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" rel="stylesheet">
-    <script crossorigin="anonymous" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script crossorigin="anonymous" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <title>{% trans "Task manager Hexlet" %}</title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
   </head>
 
   <body class="d-flex flex-column min-vh-100">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-      <a class="navbar-brand" href="/">Менеджер задач</a>
+      <a class="navbar-brand" href="/">{% trans "Task manager" %}</a>
       <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarToggleExternalContent">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -19,15 +22,15 @@
       <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">Пользователи</a>
+            <a class="nav-link" href="#">{% trans "Users" %}</a>
           </li>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="/login/">Вход</a>
+            <a class="nav-link" href="/login/">{% trans "Sign in" %}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/users/create/">Регистрация</a>
+            <a class="nav-link" href="/users/create/">{% trans "Sign up" %}</a>
           </li>
         </ul>
       </div>
@@ -38,10 +41,10 @@
       <h1 class="my-4"></h1>
     <div class="card">
       <div class="card-body p-5 bg-light">
-        <div class="display-4">Привет от Хекслета!</div>
-          <p class="lead">Практические курсы по программированию</p>
+        <div class="display-4">{% trans "Hello from Hexlet" %}</div>
+          <p class="lead">{% trans "Practical programming courses" %}</p>
           <hr>
-          <a class="btn btn-primary btn-lg" href="https://ru.hexlet.io">Узнать больше</a>
+          <a class="btn btn-primary btn-lg" href="https://ru.hexlet.io">{% trans "Learn more" %}</a>
         </div>
       </div>
     </div>

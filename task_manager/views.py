@@ -1,14 +1,7 @@
-from django.shortcuts import render
+from django.views.generic import TemplateView
 
 
-def index(request):
-    """
-    Render the index page template.
+class Index(TemplateView):
+    """Render the index template."""
 
-    Args:
-        request (HttpRequest): The HTTP request sent to the server
-
-    Returns:
-        HttpResponse: The HTTP response with the rendered HTML of the index page
-    """
-    return render(request, 'index.html')
+    template_name = 'index.html'
