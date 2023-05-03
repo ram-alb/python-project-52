@@ -95,6 +95,18 @@ DATABASES = {
 }
 
 
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+CONN_MAX_AGE = 500
+
+if os.getenv('DATABASE_URL'):
+    DATABASES = {
+        "default": dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=CONN_MAX_AGE,
+        ),
+    }
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -149,13 +161,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-DATABASE_URL = os.getenv("DATABASE_URL")
-
-CONN_MAX_AGE = 500
-DATABASES = {
-    "default": dj_database_url.config(
-        default=DATABASE_URL,
-        conn_max_age=CONN_MAX_AGE,
-    ),
-}

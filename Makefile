@@ -7,5 +7,8 @@ lint:
 isort:
 	poetry run isort task_manager
 
-start:
+migrate:
+	poetry run python manage.py migrate
+
+start: migrate
 	poetry run gunicorn task_manager.wsgi
