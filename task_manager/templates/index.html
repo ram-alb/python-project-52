@@ -1,59 +1,18 @@
+{% extends 'base.html' %}
+
 {% load i18n %}
 
-{% load bootstrap4 %}
-
-<!DOCTYPE html>
-<html lang="ru-ru">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% trans "Task manager Hexlet" %}</title>
-    {% bootstrap_css %}
-    {% bootstrap_javascript jquery='full' %}
-  </head>
-
-  <body class="d-flex flex-column min-vh-100">
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-      <a class="navbar-brand" href="/">{% trans "Task manager" %}</a>
-      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarToggleExternalContent">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#">{% trans "Users" %}</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="/login/">{% trans "Sign in" %}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/users/create/">{% trans "Sign up" %}</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-    <div class="container wrapper flex-grow-1">
-      <h1 class="my-4"></h1>
-      <h1 class="my-4"></h1>
+{% block content %}
+  <div class="container wrapper flex-grow-1">
     <div class="card">
       <div class="card-body p-5 bg-light">
-        <div class="display-4">{% trans "Hello from Hexlet" %}</div>
-          <p class="lead">{% trans "Practical programming courses" %}</p>
-          <hr>
-          <a class="btn btn-primary btn-lg" href="https://ru.hexlet.io">{% trans "Learn more" %}</a>
+        <div class="display-4">
+          {% translate "Hello from Hexlet" %}
         </div>
+        <p class="lead">{% translate "Practical programming courses" %}</p>
+        <hr>
+        <a class="btn btn-primary btn-lg" href="https://ru.hexlet.io">{% translate "Learn more" %}</a>
       </div>
     </div>
-
-    <footer>
-      <div class="container my-5 pt-4 border-top">
-        <a target="_blank" href="https://ru.hexlet.io">Hexlet</a>
-      </div>
-    </footer>
-
-  </body>
-</html>
+  </div>
+{% endblock content %}

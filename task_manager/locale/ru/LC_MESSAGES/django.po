@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-02 10:39+0600\n"
+"POT-Creation-Date: 2023-05-04 09:43+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,34 +19,73 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
-#: templates/index.html:7
+
+#: task_manager/templates/base.html:9
 msgid "Task manager Hexlet"
 msgstr "Менеджер задач Hexlet"
 
-#: templates/index.html:16
+#: task_manager/templates/base.html:16
 msgid "Task manager"
 msgstr "Менеджер задач"
 
-#: templates/index.html:24
+#: task_manager/templates/base.html:24
+#: task_manager/templates/users/user_list.html:6
 msgid "Users"
 msgstr "Пользователи"
 
-#: templates/index.html:29
+#: task_manager/templates/base.html:30
+msgid "Logout"
+msgstr "Выход"
+
+#: task_manager/templates/base.html:34 task_manager/templates/login.html:6
+#: task_manager/templates/login.html:11
 msgid "Sign in"
 msgstr "Вход"
 
-#: templates/index.html:32
+#: task_manager/templates/base.html:37
 msgid "Sign up"
 msgstr "Регистрация"
 
-#: templates/index.html:43
+#: task_manager/templates/index.html:10
 msgid "Hello from Hexlet"
 msgstr "Привет от Хекслета"
 
-#: templates/index.html:44
+#: task_manager/templates/index.html:12
 msgid "Practical programming courses"
 msgstr "Практические курсы по программированию"
 
-#: templates/index.html:46
+#: task_manager/templates/index.html:14
 msgid "Learn more"
 msgstr "Узнать больше"
+
+#: task_manager/templates/users/create_user.html:6
+msgid "Registration"
+msgstr "Регистрация"
+
+#: task_manager/templates/users/create_user.html:11
+msgid "Register"
+msgstr "Зарегистрировать"
+
+#: task_manager/templates/users/user_list.html:11
+msgid "User name"
+msgstr "Имя пользователя"
+
+#: task_manager/templates/users/user_list.html:12
+msgid "Full name"
+msgstr "Полное имя"
+
+#: task_manager/templates/users/user_list.html:13
+msgid "Created date"
+msgstr "Дата создания"
+
+#: task_manager/users/views.py:24
+msgid "User registration was successful"
+msgstr "Пользователь успешно зарегистрирован"
+
+#: task_manager/views.py:21
+msgid "You are logged in"
+msgstr "Вы залогинены"
+
+#: task_manager/views.py:29
+msgid "You are logged out"
+msgstr "Вы разлогинены"
