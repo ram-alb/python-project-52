@@ -13,5 +13,5 @@ test:
 migrate:
 	poetry run python manage.py migrate
 
-start:
+start: migrate
 	poetry run gunicorn task_manager.wsgi
