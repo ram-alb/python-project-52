@@ -1,4 +1,4 @@
-name: task-manager
+name: ci
 
 on: [push]
 
