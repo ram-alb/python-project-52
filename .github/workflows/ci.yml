@@ -24,6 +24,7 @@ jobs:
           make install
       - name: Check linter and tests
         run: |
+          make migrate
           make check
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
