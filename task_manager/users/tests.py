@@ -7,8 +7,6 @@ from django.urls import reverse
 
 user1_pk = 17
 user2_pk = 18
-user1 = User.objects.get(pk=user1_pk)
-user2 = User.objects.get(pk=user2_pk)
 passw = 'qwe'
 
 valid_form = {
@@ -66,11 +64,12 @@ class UserUpdateViewTestCase(TestCase):
         """Set up the test environment."""
         self.client = Client()
 
-        self.user = user1
+        self.user = User.objects.get(pk=user1_pk)
+        self.user2 = User.objects.get(pk=user2_pk)
 
         # login the test user
         self.client.login(
-            username=user1.username,
+            username=self.user.username,
             password=passw,
         )
 
@@ -86,7 +85,7 @@ class UserUpdateViewTestCase(TestCase):
     def test_user_update_view_with_invalid_user(self):
         """Test that a user cannot edit another user's profile."""
         response = self.client.get(
-            reverse('update_user', args=[user2.pk]),
+            reverse('update_user', args=[self.user2.pk]),
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, reverse('user_list'))
@@ -138,7 +137,8 @@ class UserDeleteViewTest(TestCase):
 
     def setUp(self):
         """Set up the test environment."""
-        self.user = user1
+        self.user = User.objects.get(pk=user1_pk)
+        self.user2 = User.objects.get(pk=user2_pk)
         self.url = reverse('delete_user', kwargs={'pk': self.user.pk})
         self.login_url = reverse('login')
         self.user_list_url = reverse('user_list')
@@ -156,7 +156,7 @@ class UserDeleteViewTest(TestCase):
 
     def test_delete_authenticated_user_not_owner(self):
         """Test when user try to delete another user profile."""
-        self.client.login(username=user2.username, password=passw)
+        self.client.login(username=self.user2.username, password=passw)
         response = self.client.get(self.url)
         self.assertRedirects(response, self.user_list_url)
         messages = list(get_messages(response.wsgi_request))
@@ -168,7 +168,7 @@ class UserDeleteViewTest(TestCase):
 
     def test_delete_authenticated_user_owner(self):
         """Test when user delete own profile."""
-        self.client.login(username=user1.username, password=passw)
+        self.client.login(username=self.user.username, password=passw)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
