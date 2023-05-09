@@ -27,3 +27,4 @@ jobs:
           make check
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DB_ENGINE: SQLite
