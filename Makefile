@@ -10,6 +10,11 @@ isort:
 test:
 	poetry run python manage.py test
 
+selfcheck:
+	poetry check
+
+check: selfcheck test lint
+
 migrate:
 	poetry run python manage.py migrate
 
