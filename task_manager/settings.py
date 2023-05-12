@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'task_manager',
     'task_manager.users',
+    'task_manager.statuses',
 ]
 
 MIDDLEWARE = [
@@ -103,7 +104,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 CONN_MAX_AGE = 500
 
-if os.getenv('DATABASE_URL'):
+if DATABASE_URL:
     DATABASES = {
         "default": dj_database_url.config(
             default=DATABASE_URL,
@@ -161,7 +162,6 @@ USE_L10N = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
