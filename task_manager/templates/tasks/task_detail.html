@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+
+<div class="container wrapper flex-grow-1">
+  <h1 class="my-4">{% translate "Task view" %}</h1>
+
+  <div class="card">
+    <div class="card-header bg-secondary text-white">
+      <h2>{{ object.name }}</h2>
+    </div>
+    <div class="card-body bg-light">
+      <p>{{ object.description }}</p>
+      <hr>
+      <div class="container">
+
+        <div class="row p-1">
+          <div class="col">{% translate "Author" %}</div>
+          <div class="col">{{ object.author }}</div>
+        </div>
+
+        <div class="row p-1">
+          <div class="col">{% translate "Executor" %}</div>
+          <div class="col">{{ object.executor }}</div>
+        </div>
+
+        <div class="row p-1">
+          <div class="col">{% translate "Status" %}</div>
+          <div class="col">{{ object.status }}</div>
+        </div>
+
+        <div class="row p-1">
+          <div class="col">{% translate "Creation date" %}</div>
+          <div class="col">{{ object.created_at|date:"d.m.Y" }} {{ object.created_at|time:"H:i" }}</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row p-1">
+      <div class="col">
+        <a href="{% url 'update_task' object.id %}">{% translate "Update" %}</a>
+        <br>
+        <a href="{% url 'delete_task' object.id %}">{% translate "Delete" %}</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

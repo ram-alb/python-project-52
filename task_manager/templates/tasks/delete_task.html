@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <h1>{% translate "Delete task" %}</h1>
+  <p>{{ message }}</p>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <input class="btn btn-primary" type="submit" value="{% translate 'Yes, delete' %}">
+    </div>
+  </form>
+
+{% endblock content %}
