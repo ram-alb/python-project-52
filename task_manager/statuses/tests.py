@@ -6,16 +6,19 @@ from django.test import Client, TestCase
 from django.urls import reverse
 
 from task_manager.statuses.models import Statuses
+from task_manager.utils.fixtures import (
+    test_invalid_form,
+    test_unauthenticated_user,
+)
 
 
 class BaseSetupTestCase(TestCase):
     """Set up for testing statuses app."""
 
     def setUp(self):
-        """Set up for testing statuses app."""
         self.username = 'testuser'
         self.passw = 'testpass'
-        self.client = Client()
+
         self.user = User.objects.create_user(
             username=self.username,
             password=self.passw,
@@ -25,6 +28,14 @@ class BaseSetupTestCase(TestCase):
         self.login_url = reverse('login')
         self.statuses_list_url = reverse('statuses_list')
 
+        self.valid_form = {
+            'name': 'New Status',
+        }
+
+        self.test_unauthenticated_user = test_unauthenticated_user
+        self.test_invalid_form = test_invalid_form
+
+        self.client = Client()
         self.client.login(username=self.username, password=self.passw)
 
 
@@ -32,53 +43,36 @@ class CreateStatusViewTestCase(BaseSetupTestCase):
     """Test status creating view."""
 
     def setUp(self):
-        """Set up status creating test case."""
         super().setUp()
         self.url = reverse('create_status')
-        self.form_data = {
-            'name': 'New Status',
-        }
 
     def test_create_status_view_authenticated_user(self):
-        """Test status creating by authenticated user."""
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(response, 'statuses/create_status.html')
 
     def test_create_status_view_unauthenticated_user(self):
-        """Test status creating by unauthenticated user."""
         self.client.logout()
         response = self.client.get(self.url)
-        self.assertRedirects(response, self.login_url)
-        messages = list(get_messages(response.wsgi_request))
-        self.assertEqual(len(messages), 1)
-        self.assertEqual(
-            str(messages[0]),
-            'You are not signed in! Please, sign in',
-        )
+        self.test_unauthenticated_user(response)
 
     def test_create_status_view_valid_form(self):
-        """Test status creating by sending valid form."""
-        response = self.client.post(self.url, data=self.form_data)
+        response = self.client.post(self.url, data=self.valid_form)
         self.assertRedirects(response, self.statuses_list_url)
         self.assertEqual(Statuses.objects.count(), 2)
         status = Statuses.objects.last()
         self.assertEqual(status.name, 'New Status')
 
     def test_create_status_view_invalid_form(self):
-        """Test status creating by sending invalid form."""
-        self.form_data['name'] = ''
-        response = self.client.post(self.url, data=self.form_data)
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertTemplateUsed(response, 'statuses/create_status.html')
-        self.assertEqual(Statuses.objects.count(), 1)
+        invalid_form = {'name': ''}
+        response = self.client.post(self.url, data=invalid_form)
+        self.test_invalid_form(response, Statuses)
 
 
 class UpdateStatusViewTestCase(BaseSetupTestCase):
     """Test status updating view."""
 
     def setUp(self):
-        """Set up status updating test case."""
         super().setUp()
         self.url = reverse('update_status', kwargs={'pk': self.status.pk})
         self.new_status_data = {
@@ -86,19 +80,16 @@ class UpdateStatusViewTestCase(BaseSetupTestCase):
         }
 
     def test_update_status_view_unauthenticated_user(self):
-        """Test status updating by unauthenticated user by get request."""
         self.client.logout()
         response = self.client.get(self.url)
-        self.assertRedirects(response, self.login_url)
+        self.test_unauthenticated_user(response)
 
     def test_update_status_view_authenticated_user(self):
-        """Test status updating by authenticated user by get request."""
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(response, 'statuses/update_status.html')
 
     def test_update_status_view_post(self):
-        """Test status updating by post request."""
         response = self.client.post(self.url, data=self.new_status_data)
         self.assertRedirects(response, self.statuses_list_url)
 
@@ -117,24 +108,15 @@ class DeleteStatusViewTestCase(BaseSetupTestCase):
     """Test status deleting view."""
 
     def setUp(self):
-        """Set up status deleting test case."""
         super().setUp()
         self.url = reverse('delete_status', kwargs={'pk': self.status.pk})
 
     def test_delete_status_view_unauthenticated_user(self):
-        """Test status deleting by unauthenticated user."""
         self.client.logout()
         response = self.client.get(self.url)
-        self.assertRedirects(response, self.login_url)
-        messages = list(get_messages(response.wsgi_request))
-        self.assertEqual(len(messages), 1)
-        self.assertEqual(
-            str(messages[0]),
-            'You are not signed in! Please, sign in',
-        )
+        self.test_unauthenticated_user(response)
 
     def test_delete_status_view_authenticated_user(self):
-        """Test status deleting by authenticated user."""
         response = self.client.get(self.url)
 
         self.assertContains(response, 'Status deleting', html=False)

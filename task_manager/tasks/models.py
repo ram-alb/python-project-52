@@ -23,3 +23,7 @@ class Tasks(models.Model):
         related_name='executed_tasks',
     )
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        """Return a string representation of the task."""
+        return self.name

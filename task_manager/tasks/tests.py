@@ -7,42 +7,12 @@ from django.urls import reverse
 
 from task_manager.statuses.models import Statuses
 from task_manager.tasks.models import Tasks
+from task_manager.utils.fixtures import (
+    test_invalid_form,
+    test_unauthenticated_user,
+)
 
 passw = 'pass'
-
-
-def test_unauthenticated_user(response):
-    """
-    Test the behavior when an unauthenticated user tries to access a view.
-
-    Args:
-        response (HttpResponse): The HTTP response object.
-
-    Raises:
-        AssertionError: If the test fails.
-    """
-    login_url = reverse('login')
-    login_message = 'You are not signed in! Please, sign in'
-
-    assert response.status_code == HTTPStatus.FOUND
-    assert response.url == login_url
-    messages = list(get_messages(response.wsgi_request))
-    assert len(messages) == 1
-    assert str(messages[0]) == login_message
-
-
-def test_invalid_form(response):
-    """
-    Test the behavior when a form is invalid.
-
-    Args:
-        response (HttpResponse): The HTTP response object.
-
-    Raises:
-        AssertionError: If the test fails.
-    """
-    assert response.status_code == HTTPStatus.OK
-    assert Tasks.objects.count() == 1
 
 
 class BaseSetup(TestCase):
@@ -135,7 +105,7 @@ class CreateTaskViewTest(BaseSetup):
 
     def test_create_task_view_invalid_form(self):
         response = self.client.post(self.url, data=self.invalid_data)
-        self.test_invalid_form(response)
+        self.test_invalid_form(response, Tasks)
 
 
 class UpdateTaskViewTest(BaseSetup):
@@ -170,7 +140,7 @@ class UpdateTaskViewTest(BaseSetup):
 
     def test_update_task_view_invalid_form(self):
         response = self.client.post(self.url, data=self.invalid_data)
-        self.test_invalid_form(response)
+        self.test_invalid_form(response, Tasks)
 
 
 class DeleteTaskViewTest(BaseSetup):

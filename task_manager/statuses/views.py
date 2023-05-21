@@ -1,57 +1,29 @@
-from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.utils.translation import gettext
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from task_manager.statuses.forms import StatusCreationForm
 from task_manager.statuses.models import Statuses
+from task_manager.utils.tm_utils import (
+    TaskManagerFormValidMixin,
+    TaskManagerLoginMixin,
+)
 
 
-class StatusesListView(LoginRequiredMixin, ListView):
-    """View for displaying a list of statuses."""
-
-    model = Statuses
-    template_name = 'statuses/statuses_list.html'
-    login_url = reverse_lazy('login')
-    redirect_field_name = None
-
-    def handle_no_permission(self):
-        """Handle the case when the user does not signed in."""
-        messages.error(
-            self.request,
-            gettext('You are not signed in! Please, sign in'),
-        )
-        return super().handle_no_permission()
-
-
-class StatusMixin(LoginRequiredMixin):
+class StatusesMixin(TaskManagerLoginMixin, TaskManagerFormValidMixin):
     """Mixin class for status views."""
 
     model = Statuses
     success_url = reverse_lazy('statuses_list')
-    login_url = reverse_lazy('login')
-    redirect_field_name = None
-
-    def handle_no_permission(self):
-        """Handle the case when the user does not signed in."""
-        messages.error(
-            self.request,
-            gettext('You are not signed in! Please, sign in'),
-        )
-        return super().handle_no_permission()
-
-    def form_valid(self, form):
-        """Handle the case when the form is valid."""
-        response = super().form_valid(form)
-        messages.success(
-            self.request,
-            self.success_message,
-        )
-        return response
 
 
-class CreateStatusView(StatusMixin, CreateView):
+class StatusesListView(StatusesMixin, ListView):
+    """View for displaying a list of statuses."""
+
+    template_name = 'statuses/statuses_list.html'
+
+
+class CreateStatusView(StatusesMixin, CreateView):
     """View for creating a new status."""
 
     success_message = gettext('The status was successfully created')
@@ -59,7 +31,7 @@ class CreateStatusView(StatusMixin, CreateView):
     form_class = StatusCreationForm
 
 
-class UpdateStatusView(StatusMixin, UpdateView):
+class UpdateStatusView(StatusesMixin, UpdateView):
     """View for updating an existing status."""
 
     success_message = gettext('The status was successfully updated')
@@ -67,7 +39,7 @@ class UpdateStatusView(StatusMixin, UpdateView):
     form_class = StatusCreationForm
 
 
-class DeleteStatusView(StatusMixin, DeleteView):
+class DeleteStatusView(StatusesMixin, DeleteView):
     """View for deleting a status."""
 
     template_name = 'statuses/delete_status.html'

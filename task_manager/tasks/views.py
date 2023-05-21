@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext
@@ -13,42 +12,26 @@ from django.views.generic import (
 
 from task_manager.tasks.forms import TaskCreationForm
 from task_manager.tasks.models import Tasks
+from task_manager.utils.tm_utils import (
+    TaskManagerFormValidMixin,
+    TaskManagerLoginMixin,
+)
 
 
-class TaskMixin(LoginRequiredMixin):
+class TasksMixin(TaskManagerLoginMixin, TaskManagerFormValidMixin):
     """Mixin class that provides common functionality for task-related views."""
 
     model = Tasks
     success_url = reverse_lazy('tasks_list')
 
-    login_url = reverse_lazy('login')
-    redirect_field_name = None
 
-    def handle_no_permission(self):
-        """Handle the case when the user is not logged in."""
-        messages.error(
-            self.request,
-            gettext('You are not signed in! Please, sign in'),
-        )
-        return super().handle_no_permission()
-
-    def form_valid(self, form):
-        """Handle the case when the form is valid."""
-        response = super().form_valid(form)
-        messages.success(
-            self.request,
-            self.success_message,
-        )
-        return response
-
-
-class TasksListView(TaskMixin, ListView):
+class TasksListView(TasksMixin, ListView):
     """A view for displaying a list of tasks."""
 
     template_name = 'tasks/tasks_list.html'
 
 
-class CreateTaskView(TaskMixin, CreateView):
+class CreateTaskView(TasksMixin, CreateView):
     """A view for creating a new task."""
 
     form_class = TaskCreationForm
@@ -61,7 +44,7 @@ class CreateTaskView(TaskMixin, CreateView):
         return super().form_valid(form)
 
 
-class UpdateTaskView(TaskMixin, UpdateView):
+class UpdateTaskView(TasksMixin, UpdateView):
     """A view for updating an existing task."""
 
     success_url = reverse_lazy('tasks_list')
@@ -70,7 +53,7 @@ class UpdateTaskView(TaskMixin, UpdateView):
     success_message = gettext('The task was successfully updated')
 
 
-class DeleteTaskView(TaskMixin, DeleteView):
+class DeleteTaskView(TasksMixin, DeleteView):
     """A view for deleting a task."""
 
     success_url = reverse_lazy('tasks_list')
@@ -80,8 +63,7 @@ class DeleteTaskView(TaskMixin, DeleteView):
     def get_context_data(self, **kwargs):
         """Return context for the delete task view."""
         context = super().get_context_data(**kwargs)
-        task_name = self.object.name
-        message = 'Are you sure you want to delete the %s?' % task_name
+        message = 'Are you sure you want to delete the %s?' % self.object
         context['message'] = gettext(message)
         return context
 
@@ -99,7 +81,7 @@ class DeleteTaskView(TaskMixin, DeleteView):
         return super().get(request, *args, **kwargs)
 
 
-class TaskDetailView(TaskMixin, DetailView):
+class TaskDetailView(TasksMixin, DetailView):
     """A view for displaying detailed information about a task."""
 
     template_name = 'tasks/task_detail.html'
