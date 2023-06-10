@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from task_manager.labels.models import Labels
 from task_manager.statuses.models import Statuses
 
 max_length = 150
@@ -22,6 +23,7 @@ class Tasks(models.Model):
         on_delete=models.PROTECT,
         related_name='executed_tasks',
     )
+    labels = models.ManyToManyField(Labels)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

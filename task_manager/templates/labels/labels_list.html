@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+  <h1>{% translate "Labels" %}</h1>
+  <a href="{% url 'create_label' %}" class="nav-link">{% translate "Create label" %}</a>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">{% translate "Name" %}</th>
+        <th scope="col">{% translate "Created date" %}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for label in labels_list %}
+        <tr>
+          <td>{{ label.id }}</td>
+          <td>{{ label.name }}</td>
+          <td>{{ label.created_at|date:"d.m.Y" }}<br>{{ label.created_at|time:"H:i" }}</td>
+          <td>
+            <a href="{% url 'update_label' label.id %}">{% translate "Update" %}</a><br>
+            <a href="{% url 'delete_label' label.id %}">{% translate "Delete" %}</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock content %}
