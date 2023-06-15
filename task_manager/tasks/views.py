@@ -2,14 +2,10 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    DetailView,
-    ListView,
-    UpdateView,
-)
+from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
+from django_filters.views import FilterView
 
+from task_manager.tasks.filters import TasksFilter
 from task_manager.tasks.forms import TaskCreationForm
 from task_manager.tasks.models import Tasks
 from task_manager.utils.tm_utils import (
@@ -25,10 +21,11 @@ class TasksMixin(TaskManagerLoginMixin, TaskManagerFormValidMixin):
     success_url = reverse_lazy('tasks_list')
 
 
-class TasksListView(TasksMixin, ListView):
+class TasksListView(TasksMixin, FilterView):
     """A view for displaying a list of tasks."""
 
     template_name = 'tasks/tasks_list.html'
+    filterset_class = TasksFilter
 
 
 class CreateTaskView(TasksMixin, CreateView):

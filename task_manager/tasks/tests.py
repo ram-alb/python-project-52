@@ -5,6 +5,7 @@ from django.contrib.messages import get_messages
 from django.test import Client, TestCase
 from django.urls import reverse
 
+from task_manager.labels.models import Labels
 from task_manager.statuses.models import Statuses
 from task_manager.tasks.models import Tasks
 from task_manager.utils.fixtures import (
@@ -176,3 +177,62 @@ class DeleteTaskViewTest(BaseSetup):
             str(messages[0]),
             'The task was successfully deleted',
         )
+
+
+class TasksFilterTestCase(TestCase):
+    """Test for tasks filter."""
+
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='testuser',
+            password=passw,
+        )
+        self.user2 = User.objects.create_user(
+            username='testuser2',
+            password=passw,
+        )
+        self.status = Statuses.objects.create(name='Pending')
+        self.status2 = Statuses.objects.create(name='Very Urgent')
+        self.label = Labels.objects.create(name='Important')
+        self.task1 = Tasks.objects.create(
+            name='Task 1',
+            description='Description 1',
+            status=self.status,
+            author=self.user,
+            executor=self.user,
+        )
+        self.task1.labels.add(self.label)
+        self.task2 = Tasks.objects.create(
+            name='Task 2',
+            description='Description 2',
+            status=self.status2,
+            author=self.user2,
+            executor=self.user2,
+        )
+        self.client = Client()
+        self.client.force_login(self.user)
+        self.url = reverse('tasks_list')
+
+    def test_tasks_filter_with_status(self):
+        response = self.client.get(self.url, {'status': self.status.id})
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertContains(response, self.task1.name)
+        self.assertNotContains(response, self.task2.name)
+
+    def test_tasks_filter_with_executor(self):
+        response = self.client.get(self.url, {'executor': self.user.id})
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertContains(response, self.task1.name)
+        self.assertNotContains(response, self.task2.name)
+
+    def test_tasks_filter_with_labels(self):
+        response = self.client.get(self.url, {'labels': self.label.id})
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertContains(response, self.task1.name)
+        self.assertNotContains(response, self.task2.name)
+
+    def test_tasks_filter_with_self_tasks(self):
+        response = self.client.get(self.url, {'self_tasks': 'true'})
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertContains(response, self.task1.name)
+        self.assertNotContains(response, self.task2.name)

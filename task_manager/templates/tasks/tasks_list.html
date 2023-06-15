@@ -1,11 +1,59 @@
 {% extends 'base.html' %}
 
 {% load i18n %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
   <h1>{% translate "Tasks" %}</h1>
   <a href="{% url 'create_task' %}" class="nav-link">{% translate "Create task" %}</a>
+
+  <div class="bg-light row justify-content-center align-items-center my-3 py-2">
+    <form class="form-inline center" method="get">
+
+      <div class="form-group">
+        <label for="id_status">Status</label>
+        <div class="mr-3 ml-2">
+        {{ filter.form.status }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="id_executor">Executor</label>
+        <div class="mr-3 ml-2">
+        {{ filter.form.executor }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="id_labels">Label</label>
+        <div class="mr-3 ml-2">
+        {{ filter.form.labels }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="mr-3">
+          <div class="form-check">
+            {% if request.GET.self_tasks %}
+              <input id="id_self_tasks" class="form-check-input form-control is-valid" type="checkbox" name="self_tasks" checked="">
+            {% elif 'status' in request.GET %}
+              <input id="id_self_tasks" class="form-check-input form-control is-valid" type="checkbox" name="self_tasks">
+            {% else %}
+              <input id="id_self_tasks" class="form-check-input" type="checkbox" name="self_tasks">
+            {% endif%}
+            <label class="form-check-label" for="id_self_tasks">
+              Only self tasks
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input class="btn btn-primary" type="submit" value="Show">
+      </div>
+    </form>
+  </div>
 
   <table class="table table-striped">
     <thead>
