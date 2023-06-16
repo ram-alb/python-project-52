@@ -15,7 +15,7 @@ from task_manager.utils.tm_utils import (
 
 
 class UsersMixin(TaskManagerLoginMixin, TaskManagerFormValidMixin):
-    """Mixin class that provides common functionality for users app:w views."""
+    """Mixin class that provides common functionality for users app views."""
 
     model = User
     success_url = reverse_lazy('user_list')
