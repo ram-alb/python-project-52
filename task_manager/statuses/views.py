@@ -1,3 +1,6 @@
+from django.contrib import messages
+from django.db.models.deletion import ProtectedError
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
@@ -52,3 +55,16 @@ class DeleteStatusView(StatusesMixin, DeleteView):
         message = 'Are you sure you want to delete the %s?' % status_name
         context['message'] = gettext(message)
         return context
+
+    def post(self, request, *args, **kwargs):
+        try:
+            return super().post(request, *args, **kwargs)
+        except ProtectedError:
+            messages.error(
+                self.request,
+                gettext(
+                    'It is not possible to delete the status '
+                    'because it is being used',
+                ),
+            )
+        return redirect(reverse_lazy('statuses_list'))
