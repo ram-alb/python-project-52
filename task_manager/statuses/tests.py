@@ -11,7 +11,7 @@ from task_manager.utils.fixtures import test_message, test_unauthenticated_user
 class BaseSetupTestCase(TestCase):
     """Set up for testing statuses app."""
 
-    fixtures = ['users.json', 'statuses.json', 'tasks.json']
+    fixtures = ['users.json', 'statuses.json', 'tasks.json', 'labels.json']
 
     def setUp(self):
         self.login_url = reverse('login')

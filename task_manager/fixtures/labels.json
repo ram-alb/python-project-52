@@ -1,0 +1,26 @@
+[
+{
+  "model": "labels.labels",
+  "pk": 1,
+  "fields": {
+    "name": "urgent",
+    "created_at": "2023-06-19T04:58:02.401Z"
+  }
+},
+{
+  "model": "labels.labels",
+  "pk": 2,
+  "fields": {
+    "name": "important",
+    "created_at": "2023-06-19T04:58:15.707Z"
+  }
+},
+{
+  "model": "labels.labels",
+  "pk": 3,
+  "fields": {
+    "name": "preferably",
+    "created_at": "2023-06-19T05:00:04.521Z"
+  }
+}
+]
