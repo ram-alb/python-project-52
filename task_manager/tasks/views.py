@@ -60,8 +60,10 @@ class DeleteTaskView(TasksMixin, DeleteView):
     def get_context_data(self, **kwargs):
         """Return context for the delete task view."""
         context = super().get_context_data(**kwargs)
-        message = 'Are you sure you want to delete the %s?' % self.object
-        context['message'] = gettext(message)
+        message = gettext(
+            'Are you sure you want to delete the %s?',
+        ) % self.object
+        context['message'] = message
         return context
 
     def get(self, request, *args, **kwargs):

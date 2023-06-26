@@ -76,8 +76,8 @@ class UserDeleteView(UsersMixin, DeleteView):
             first_name=self.request.user.first_name,
             last_name=self.request.user.last_name,
         )
-        message = 'Are you sure you want to delete the %s?' % full_name
-        context['message'] = gettext(message)
+        message = gettext('Are you sure you want to delete the %s?') % full_name
+        context['message'] = message
         return context
 
     def dispatch(self, request, *args, **kwargs):

@@ -12,21 +12,21 @@
     <form class="form-inline center" method="get">
 
       <div class="form-group">
-        <label for="id_status">Status</label>
+        <label for="id_status">{% translate "Status" %}</label>
         <div class="mr-3 ml-2">
         {{ filter.form.status }}
         </div>
       </div>
 
       <div class="form-group">
-        <label for="id_executor">Executor</label>
+        <label for="id_executor">{% translate "Executor" %}</label>
         <div class="mr-3 ml-2">
         {{ filter.form.executor }}
         </div>
       </div>
 
       <div class="form-group">
-        <label for="id_labels">Label</label>
+        <label for="id_labels">{% translate "Label" %}</label>
         <div class="mr-3 ml-2">
         {{ filter.form.labels }}
         </div>
@@ -43,14 +43,14 @@
               <input id="id_self_tasks" class="form-check-input" type="checkbox" name="self_tasks">
             {% endif%}
             <label class="form-check-label" for="id_self_tasks">
-              Only self tasks
+              {% translate "Only self tasks" %}
             </label>
           </div>
         </div>
       </div>
 
       <div class="form-group">
-        <input class="btn btn-primary" type="submit" value="Show">
+        <input class="btn btn-primary" type="submit" value="{% translate 'Show' %}">
       </div>
     </form>
   </div>

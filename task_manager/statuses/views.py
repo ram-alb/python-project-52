@@ -52,8 +52,10 @@ class DeleteStatusView(StatusesMixin, DeleteView):
         """Return context for deleting a status view."""
         context = super().get_context_data(**kwargs)
         status_name = self.object.name
-        message = 'Are you sure you want to delete the %s?' % status_name
-        context['message'] = gettext(message)
+        message = gettext(
+            'Are you sure you want to delete the %s?',
+        ) % status_name
+        context['message'] = message
         return context
 
     def post(self, request, *args, **kwargs):

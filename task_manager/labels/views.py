@@ -44,7 +44,9 @@ class DeleteLabelView(LabelsMixin, DeleteView):
         """Add a message to a context."""
         context = super().get_context_data(**kwargs)
         label_name = self.object.name
-        message = 'Are you sure you want to delete the %s?' % label_name
+        message = gettext(
+            'Are you sure you want to delete the %s?',
+        ) % label_name
         context['message'] = gettext(message)
         return context
 
