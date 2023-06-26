@@ -19,6 +19,7 @@ django-crispy-forms = "^2.0"
 crispy-bootstrap4 = "^2022.1"
 django-extensions = "^3.2.1"
 django-filter = "^23.2"
+rollbar = "^0.16.3"
 
 
 [tool.poetry.group.dev.dependencies]
