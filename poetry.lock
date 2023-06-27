@@ -151,7 +151,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "dj-database-url"
-version = "1.3.0"
+version = "2.0.0"
 description = "Use Database URLs in your Django Application."
 category = "main"
 optional = false
@@ -966,7 +966,7 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "f16e2bdc3914d016a7203bfcd941e961af52a24b7bce2c440eecad0ac5daface"
+content-hash = "b2b202c142783690266087fb124250d722fa2102178c29ed1ac925b0c51d848a"
 
 [metadata.files]
 appnope = [
@@ -1099,8 +1099,8 @@ decorator = [
     {file = "decorator-5.1.1.tar.gz", hash = "sha256:637996211036b6385ef91435e4fae22989472f9d571faba8927ba8253acbc330"},
 ]
 dj-database-url = [
-    {file = "dj-database-url-1.3.0.tar.gz", hash = "sha256:87be5f7c4c83d9b3d8ce94b834f96cea14b3986f3629aac097afdd9318d7b098"},
-    {file = "dj_database_url-1.3.0-py3-none-any.whl", hash = "sha256:80a115bd7675c9fe14a900b2f8b5c8b1822b5a279b333bf9b2804de681656c7c"},
+    {file = "dj-database-url-2.0.0.tar.gz", hash = "sha256:a35a9f0f43775ca6f90d819dc456233ef7bcc76b47377d5d908b75c7eb320624"},
+    {file = "dj_database_url-2.0.0-py3-none-any.whl", hash = "sha256:9c9e5f7224f62635a787e9cc3c6762c9be2b19541a21e3c08fa573bd01609b4b"},
 ]
 Django = [
     {file = "Django-4.2-py3-none-any.whl", hash = "sha256:ad33ed68db9398f5dfb33282704925bce044bef4261cd4fb59e4e7f9ae505a78"},
