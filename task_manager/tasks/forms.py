@@ -16,6 +16,7 @@ class TaskCreationForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'placeholder': _('Name')}),
     )
     description = forms.CharField(
+        label=_('Description'),
         required=False,
         widget=forms.Textarea(attrs={
             'placeholder': _('Description'),
