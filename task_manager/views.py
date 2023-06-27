@@ -1,6 +1,5 @@
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
-from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.utils.translation import gettext
 from django.views.generic import TemplateView
@@ -36,10 +35,3 @@ class UserLogoutView(LogoutView):
         """Dispatch method for logging the user out."""
         messages.success(self.request, gettext('You are logged out'))
         return super().dispatch(request, *args, **kwargs)
-
-
-def rollbarr(request):
-    """Check rollbar."""
-    aaa = None
-    aaa.hello()
-    return HttpResponse("Hello, world. You're at the pollapp index.")
