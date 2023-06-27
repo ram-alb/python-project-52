@@ -74,7 +74,7 @@ class CreateLabelViewTest(BaseSetup):
     def test_create_label_view_authenticated_user(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertContains(response, 'Create label')
+        self.assertContains(response, 'Создать метку')
 
     def test_create_label_view_valid_form(self):
         old_count = Labels.objects.all().count()
@@ -83,7 +83,7 @@ class CreateLabelViewTest(BaseSetup):
         new_count = Labels.objects.all().count()
 
         self.assertRedirects(response, self.labels_list_url)
-        self.test_message(response, 'The label was successfully created')
+        self.test_message(response, 'Метка успешно создана')
         self.assertEqual(label.name, self.valid_form['name'])
         self.assertEqual(new_count, old_count + 1)
 
@@ -94,7 +94,7 @@ class CreateLabelViewTest(BaseSetup):
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(old_count, new_count)
-        self.assertContains(response, 'Create label')
+        self.assertContains(response, 'Создать метку')
 
 
 class UpdateLabelViewTest(BaseSetup):
@@ -112,7 +112,7 @@ class UpdateLabelViewTest(BaseSetup):
     def test_update_label_view_authenticated_user(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertContains(response, 'Update label')
+        self.assertContains(response, 'Изменение метки')
 
     def test_update_label_view_valid_form(self):
         old_count = Labels.objects.all().count()
@@ -121,7 +121,7 @@ class UpdateLabelViewTest(BaseSetup):
         label = Labels.objects.get(pk=self.used_label.pk)
 
         self.assertRedirects(response, self.labels_list_url)
-        self.test_message(response, 'The label was successfully updated')
+        self.test_message(response, 'Метка успешно изменена')
         self.assertEqual(old_count, new_count)
         self.assertEqual(label.name, self.valid_form['name'])
 
@@ -132,7 +132,7 @@ class UpdateLabelViewTest(BaseSetup):
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(old_count, new_count)
-        self.assertContains(response, 'Update label')
+        self.assertContains(response, 'Изменение метки')
 
 
 class DeleteLabelViewTest(BaseSetup):
@@ -152,10 +152,10 @@ class DeleteLabelViewTest(BaseSetup):
         label_name = self.used_label.name
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertContains(response, 'Label deleting')
+        self.assertContains(response, 'Удаление метки')
         self.assertContains(
             response,
-            f'Are you sure you want to delete the {label_name}?',
+            f'Вы уверены, что хотите удалить {label_name}?',
             html=False,
         )
 
@@ -167,12 +167,12 @@ class DeleteLabelViewTest(BaseSetup):
         new_count = Labels.objects.all().count()
 
         self.assertRedirects(response, self.labels_list_url)
-        self.test_message(response, 'The label was successfully deleted')
+        self.test_message(response, 'Метка успешно удалена')
 
         response = self.client.post(self.url)
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.test_message(
             response,
-            'The label cannot be deleted because it is in use',
+            'Невозможно удалить метку, потому что она используется',
         )
         self.assertEqual(new_count, old_count - 1)

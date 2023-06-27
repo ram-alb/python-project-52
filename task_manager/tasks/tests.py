@@ -74,7 +74,7 @@ class CreateTaskViewTest(BaseSetup):
     def test_create_task_view_authenticated_user(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertContains(response, 'Create task')
+        self.assertContains(response, 'Создать задачу')
 
     def test_create_task_view_valid_form(self):
         tasks_old = Tasks.objects.all().count()
@@ -83,7 +83,7 @@ class CreateTaskViewTest(BaseSetup):
         task = Tasks.objects.last()
 
         self.assertRedirects(response, self.tasks_list_url)
-        self.test_message(response, 'The task was successfully created')
+        self.test_message(response, 'Задача успешно создана')
         self.assertEqual(task.name, self.valid_data['name'])
         self.assertEqual(tasks_new, tasks_old + 1)
 
@@ -93,7 +93,7 @@ class CreateTaskViewTest(BaseSetup):
         tasks_count_new = Tasks.objects.all().count()
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertContains(response, 'Create task')
+        self.assertContains(response, 'Создать задачу')
         self.assertEqual(tasks_count_new, tasks_count_old)
 
 
@@ -112,7 +112,7 @@ class UpdateTaskViewTest(BaseSetup):
     def test_update_task_view_authenticated_user(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertContains(response, 'Update task')
+        self.assertContains(response, 'Изменение задачи')
 
     def test_update_task_view_valid_form(self):
         old_count = Tasks.objects.all().count()
@@ -121,7 +121,7 @@ class UpdateTaskViewTest(BaseSetup):
         new_count = Tasks.objects.all().count()
 
         self.assertRedirects(response, self.tasks_list_url)
-        self.test_message(response, 'The task was successfully updated')
+        self.test_message(response, 'Задача успешно изменена')
         self.assertEqual(task_name, self.valid_data['name'])
         self.assertEqual(old_count, new_count)
 
@@ -131,7 +131,7 @@ class UpdateTaskViewTest(BaseSetup):
         new_count = Tasks.objects.all().count()
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertContains(response, 'Update task')
+        self.assertContains(response, 'Изменение задачи')
         self.assertEqual(old_count, new_count)
 
 
@@ -152,10 +152,10 @@ class DeleteTaskViewTest(BaseSetup):
         task_name = self.task.name
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertContains(response, 'Delete task')
+        self.assertContains(response, 'Удаление задачи')
         self.assertContains(
             response,
-            f'Are you sure you want to delete the {task_name}?',
+            f'Вы уверены, что хотите удалить {task_name}?',
         )
 
     def test_delete_task_valid_form(self):
@@ -164,7 +164,7 @@ class DeleteTaskViewTest(BaseSetup):
         new_count = Tasks.objects.all().count()
 
         self.assertRedirects(response, self.tasks_list_url)
-        self.test_message(response, 'The task was successfully deleted')
+        self.test_message(response, 'Задача успешно удалена')
         self.assertEqual(old_count, new_count + 1)
 
 

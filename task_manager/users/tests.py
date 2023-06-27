@@ -32,7 +32,7 @@ class UserListViewTestCase(TestCase):
         ]
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertContains(response, 'Users')
+        self.assertContains(response, 'Пользователи')
         self.assertEqual(response.context['object_list'].count(), users.count())
         self.assertListEqual(user_names, response_user_names)
 
@@ -66,7 +66,10 @@ class CreateUserViewTestCase(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertEqual(User.objects.count(), 1)
         self.assertEqual(len(messages), 1)
-        self.assertEqual(str(messages[0]), 'User registration was successful')
+        self.assertEqual(
+            str(messages[0]),
+            'Пользователь успешно зарегистрирован',
+        )
 
     def test_create_user_view_invalid_data(self):
         self.user_data['password2'] = 'wrongpassword'
@@ -107,7 +110,7 @@ class UserUpdateViewTestCase(TestCase):
         self.assertEqual(len(messages), 1)
         self.assertEqual(
             str(messages[0]),
-            'You are not signed in! Please, sign in',
+            'Вы не авторизованы! Пожалуйста, выполните вход',
         )
 
     def test_user_update_authenticated_user(self):
@@ -127,7 +130,7 @@ class UserUpdateViewTestCase(TestCase):
         self.assertEqual(len(messages), 1)
         self.assertEqual(
             str(messages[0]),
-            "You don't have the rights to modify another user.",
+            "У вас нет прав для изменения другого пользователя.",
         )
 
     def test_user_update_view_with_valid_form(self):
@@ -146,7 +149,7 @@ class UserUpdateViewTestCase(TestCase):
         self.assertEqual(len(messages), 1)
         self.assertEqual(
             str(messages[0]),
-            "The user has been successfully updated",
+            "Пользователь успешно изменен",
         )
 
     def test_user_update_view_with_invalid_form(self):
@@ -184,7 +187,7 @@ class UserDeleteViewTest(TestCase):
         self.assertEqual(len(messages), 1)
         self.assertEqual(
             str(messages[0]),
-            "You are not signed in! Please, sign in.",
+            "Вы не авторизованы! Пожалуйста, выполните вход.",
         )
 
     def test_delete_authenticated_user_not_owner(self):
@@ -196,7 +199,7 @@ class UserDeleteViewTest(TestCase):
         self.assertEqual(len(messages), 1)
         self.assertEqual(
             str(messages[0]),
-            "You don't have the rights to modify another user.",
+            "У вас нет прав для изменения другого пользователя.",
         )
 
     def test_delete_authenticated_user_owner(self):
@@ -210,5 +213,5 @@ class UserDeleteViewTest(TestCase):
 
         self.assertRedirects(response, self.user_list_url)
         self.assertEqual(len(messages), 1)
-        self.assertEqual(str(messages[0]), "The user was successfuly deleted")
+        self.assertEqual(str(messages[0]), "Пользователь успешно удален")
         self.assertFalse(User.objects.filter(pk=self.user1.pk).exists())

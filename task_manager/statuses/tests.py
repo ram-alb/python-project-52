@@ -44,7 +44,7 @@ class StatusesListViewTestCase(BaseSetupTestCase):
         ]
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertContains(response, 'Statuses')
+        self.assertContains(response, 'Статусы')
         self.assertEqual(
             response.context['object_list'].count(),
             statuses.count(),
@@ -77,7 +77,7 @@ class CreateStatusViewTestCase(BaseSetupTestCase):
 
         self.assertRedirects(response, self.statuses_list_url)
         self.assertEqual(status.name, 'New Status')
-        self.test_message(response, 'The status was successfully created')
+        self.test_message(response, 'Статус успешно создан')
         self.assertEqual(statuses_count_new, statuses_count_old + 1)
 
     def test_create_status_view_invalid_form(self):
@@ -87,7 +87,7 @@ class CreateStatusViewTestCase(BaseSetupTestCase):
         statuses_count_new = Statuses.objects.all().count()
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertContains(response, 'Create status')
+        self.assertContains(response, 'Создать статус')
         self.assertEqual(statuses_count_new, statuses_count_old)
 
 
@@ -117,7 +117,7 @@ class UpdateStatusViewTestCase(BaseSetupTestCase):
 
         self.assertRedirects(response, self.statuses_list_url)
         self.assertEqual(updated_status.name, 'New Status')
-        self.test_message(response, 'The status was successfully updated')
+        self.test_message(response, 'Статус успешно изменен')
 
 
 class DeleteStatusViewTestCase(BaseSetupTestCase):
@@ -140,17 +140,17 @@ class DeleteStatusViewTestCase(BaseSetupTestCase):
         status_name = self.unused_status.name
         response = self.client.get(self.url)
 
-        self.assertContains(response, 'Status deleting')
+        self.assertContains(response, 'Удаление статуса')
         self.assertContains(
             response,
-            f'Are you sure you want to delete the {status_name}?',
+            f'Вы уверены, что хотите удалить {status_name}?',
         )
 
     def test_delete_status_unused(self):
         response = self.client.post(self.url)
 
         self.assertRedirects(response, self.statuses_list_url)
-        self.test_message(response, 'The status was successfully deleted')
+        self.test_message(response, 'Статус успешно удален')
         self.assertFalse(
             Statuses.objects.filter(pk=self.unused_status.pk).exists(),
         )
@@ -162,6 +162,6 @@ class DeleteStatusViewTestCase(BaseSetupTestCase):
         self.assertRedirects(response, self.statuses_list_url)
         self.test_message(
             response,
-            'It is not possible to delete the status because it is being used',
+            'Невозможно удалить статус, потому что он используется',
         )
         self.assertTrue(Statuses.objects.filter(pk=self.status.pk).exists())

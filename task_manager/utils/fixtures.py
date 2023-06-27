@@ -31,22 +31,8 @@ def test_unauthenticated_user(response):
         AssertionError: If the test fails.
     """
     login_url = reverse('login')
-    login_message = 'You are not signed in! Please, sign in'
+    login_message = 'Вы не авторизованы! Пожалуйста, выполните вход'
 
     assert response.status_code == HTTPStatus.FOUND
     assert response.url == login_url
     test_message(response, login_message)
-
-
-def test_invalid_form(response, model):
-    """
-    Test the behavior when a form is invalid.
-
-    Args:
-        response (HttpResponse): The HTTP response object.
-
-    Raises:
-        AssertionError: If the test fails.
-    """
-    assert response.status_code == HTTPStatus.OK
-    assert model.objects.count() == 1
