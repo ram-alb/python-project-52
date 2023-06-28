@@ -15,11 +15,11 @@
     </tr>
   </thead>
   <tbody>
-    {% for user in user_list %}
+    {% for user in customuser_list %}
       <tr>
         <td>{{ user.id }}</td>
         <td>{{ user.username }}</td>
-        <td>{{ user.first_name }} {{ user.last_name }}</td>
+        <td>{{ user }}</td>
         <td>{{ user.date_joined }}</td>
         <td>
           <a href="{% url 'update_user' user.pk %}">{% translate "Update" %}</a>

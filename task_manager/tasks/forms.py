@@ -1,10 +1,10 @@
 from django import forms
-from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
 from task_manager.labels.models import Labels
 from task_manager.statuses.models import Statuses
 from task_manager.tasks.models import Tasks
+from task_manager.users.models import CustomUser
 
 
 class TaskCreationForm(forms.ModelForm):
@@ -30,7 +30,7 @@ class TaskCreationForm(forms.ModelForm):
     )
     executor = forms.ModelChoiceField(
         label=_('Executor'),
-        queryset=User.objects.all(),
+        queryset=CustomUser.objects.all(),
     )
     labels = forms.ModelMultipleChoiceField(
         label=_('Labels'),

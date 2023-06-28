@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.db.models import ProtectedError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -8,6 +7,7 @@ from django.views.generic import DeleteView, ListView, UpdateView
 from django.views.generic.edit import CreateView
 
 from task_manager.users.forms import UserRegistryForm
+from task_manager.users.models import CustomUser
 from task_manager.utils.tm_utils import (
     TaskManagerFormValidMixin,
     TaskManagerLoginMixin,
@@ -17,21 +17,21 @@ from task_manager.utils.tm_utils import (
 class UsersMixin(TaskManagerLoginMixin, TaskManagerFormValidMixin):
     """Mixin class that provides common functionality for users app views."""
 
-    model = User
+    model = CustomUser
     success_url = reverse_lazy('user_list')
 
 
 class UserListView(ListView):
     """View for displaying a list of all registered users."""
 
-    model = User
+    model = CustomUser
     template_name = 'users/user_list.html'
 
 
 class CreateUserView(TaskManagerFormValidMixin, CreateView):
     """View for registering a new user."""
 
-    model = User
+    model = CustomUser
     form_class = UserRegistryForm
     success_url = reverse_lazy('login')
     template_name = 'users/create_user.html'
