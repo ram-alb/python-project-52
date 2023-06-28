@@ -35,6 +35,16 @@
           <div class="col">{{ object.created_at|date:"d.m.Y" }} {{ object.created_at|time:"H:i" }}</div>
         </div>
 
+        <div class="row p-1">
+          <div class="col">
+            <h6>Метки:</h6>
+            <ul>
+              {% for label in object.labels.all %}
+                <li>{{ label.name }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
 
