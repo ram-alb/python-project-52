@@ -1,10 +1,10 @@
 import django_filters
 from django import forms
-from django.contrib.auth.models import User
 
 from task_manager.labels.models import Labels
 from task_manager.statuses.models import Statuses
 from task_manager.tasks.models import Tasks
+from task_manager.users.models import CustomUser
 
 
 class TasksFilter(django_filters.FilterSet):
@@ -18,7 +18,7 @@ class TasksFilter(django_filters.FilterSet):
     )
     executor = django_filters.ModelChoiceFilter(
         label='',
-        queryset=User.objects.all(),
+        queryset=CustomUser.objects.all(),
         to_field_name='id',
         widget=forms.Select(attrs={'class': 'form-control'}),
     )
