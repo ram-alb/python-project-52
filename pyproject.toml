@@ -25,6 +25,7 @@ dj-database-url = "^2.0.0"
 [tool.poetry.group.dev.dependencies]
 wemake-python-styleguide = "^0.17.0"
 ipython = "^8.13.2"
+coverage = "^7.4.1"
 
 [build-system]
 requires = ["poetry-core"]

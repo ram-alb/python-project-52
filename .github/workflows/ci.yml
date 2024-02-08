@@ -29,3 +29,12 @@ jobs:
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           DB_ENGINE: SQLite
+      - name: publish code coverage
+        uses: paambaati/codeclimate-action@v5.0.0
+        if: github.ref_name == 'main'
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageCommand: make test-coverage
+          debug: true
