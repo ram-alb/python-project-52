@@ -37,6 +37,9 @@ ALLOWED_HOSTS = [
     'ram-alb-task-manager.up.railway.app',
 ]
 
+RENDER_EXTERNAL_HOSTNAME = os.getenv('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # Application definition
 
