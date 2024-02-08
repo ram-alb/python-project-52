@@ -8,7 +8,7 @@ test:
 	poetry run coverage run manage.py test
 
 test-coverage:
-	poetry run coverage report
+	poetry run coverage xml
 
 selfcheck:
 	poetry check
