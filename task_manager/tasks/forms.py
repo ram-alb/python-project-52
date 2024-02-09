@@ -31,6 +31,7 @@ class TaskCreationForm(forms.ModelForm):
     executor = forms.ModelChoiceField(
         label=_('Executor'),
         queryset=CustomUser.objects.all(),
+        required=False,
     )
     labels = forms.ModelMultipleChoiceField(
         label=_('Labels'),
