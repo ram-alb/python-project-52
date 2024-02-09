@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from task_manager.statuses.models import Statuses
+from task_manager.statuses.models import Status
 from task_manager.utils.fixtures import test_message, test_unauthenticated_user
 
 
@@ -16,7 +16,7 @@ class BaseSetupTestCase(TestCase):
     def setUp(self):
         self.login_url = reverse('login')
         self.statuses_list_url = reverse('statuses_list')
-        self.status = Statuses.objects.get(pk=1)
+        self.status = Status.objects.get(pk=1)
         self.valid_form = {'name': 'New Status'}
         self.test_unauthenticated_user = test_unauthenticated_user
         self.test_message = test_message
@@ -35,7 +35,7 @@ class StatusesListViewTestCase(BaseSetupTestCase):
         self.test_unauthenticated_user(response)
 
     def test_statuses_list_view_authenticated_user(self):
-        statuses = Statuses.objects.all()
+        statuses = Status.objects.all()
         status_names = [status.name for status in statuses]
 
         response = self.client.get(self.statuses_list_url)
@@ -70,10 +70,10 @@ class CreateStatusViewTestCase(BaseSetupTestCase):
         self.test_unauthenticated_user(response)
 
     def test_create_status_view_valid_form(self):
-        statuses_count_old = Statuses.objects.all().count()
+        statuses_count_old = Status.objects.all().count()
         response = self.client.post(self.url, data=self.valid_form)
-        statuses_count_new = Statuses.objects.all().count()
-        status = Statuses.objects.last()
+        statuses_count_new = Status.objects.all().count()
+        status = Status.objects.last()
 
         self.assertRedirects(response, self.statuses_list_url)
         self.assertEqual(status.name, 'New Status')
@@ -81,10 +81,10 @@ class CreateStatusViewTestCase(BaseSetupTestCase):
         self.assertEqual(statuses_count_new, statuses_count_old + 1)
 
     def test_create_status_view_invalid_form(self):
-        statuses_count_old = Statuses.objects.all().count()
+        statuses_count_old = Status.objects.all().count()
         invalid_form = {'name': ''}
         response = self.client.post(self.url, data=invalid_form)
-        statuses_count_new = Statuses.objects.all().count()
+        statuses_count_new = Status.objects.all().count()
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertContains(response, 'Создать статус')
@@ -113,7 +113,7 @@ class UpdateStatusViewTestCase(BaseSetupTestCase):
 
     def test_update_status_view_post(self):
         response = self.client.post(self.url, data=self.new_status_data)
-        updated_status = Statuses.objects.get(pk=self.status.pk)
+        updated_status = Status.objects.get(pk=self.status.pk)
 
         self.assertRedirects(response, self.statuses_list_url)
         self.assertEqual(updated_status.name, 'New Status')
@@ -125,7 +125,7 @@ class DeleteStatusViewTestCase(BaseSetupTestCase):
 
     def setUp(self):
         super().setUp()
-        self.unused_status = Statuses.objects.last()
+        self.unused_status = Status.objects.last()
         self.url = reverse(
             'delete_status',
             kwargs={'pk': self.unused_status.pk},
@@ -152,7 +152,7 @@ class DeleteStatusViewTestCase(BaseSetupTestCase):
         self.assertRedirects(response, self.statuses_list_url)
         self.test_message(response, 'Статус успешно удален')
         self.assertFalse(
-            Statuses.objects.filter(pk=self.unused_status.pk).exists(),
+            Status.objects.filter(pk=self.unused_status.pk).exists(),
         )
 
     def test_delete_status_busy(self):
@@ -164,4 +164,4 @@ class DeleteStatusViewTestCase(BaseSetupTestCase):
             response,
             'Невозможно удалить статус, потому что он используется',
         )
-        self.assertTrue(Statuses.objects.filter(pk=self.status.pk).exists())
+        self.assertTrue(Status.objects.filter(pk=self.status.pk).exists())

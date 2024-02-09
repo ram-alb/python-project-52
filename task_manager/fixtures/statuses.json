@@ -1,6 +1,6 @@
 [
 {
-  "model": "statuses.statuses",
+  "model": "statuses.status",
   "pk": 1,
   "fields": {
     "name": "done",
@@ -8,7 +8,7 @@
   }
 },
 {
-  "model": "statuses.statuses",
+  "model": "statuses.status",
   "pk": 2,
   "fields": {
     "name": "rejected",
@@ -16,7 +16,7 @@
   }
 },
 {
-  "model": "statuses.statuses",
+  "model": "statuses.status",
   "pk": 3,
   "fields": {
     "name": "postponed",
@@ -24,7 +24,7 @@
   }
 },
 {
-  "model": "statuses.statuses",
+  "model": "statuses.status",
   "pk": 4,
   "fields": {
     "name": "not used",

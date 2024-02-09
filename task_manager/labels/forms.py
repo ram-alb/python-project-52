@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from task_manager.labels.models import Labels
+from task_manager.labels.models import Label
 
 
 class LabelCreattionForm(forms.ModelForm):
@@ -14,5 +14,5 @@ class LabelCreattionForm(forms.ModelForm):
     )
 
     class Meta:
-        model = Labels
+        model = Label
         fields = ['name']

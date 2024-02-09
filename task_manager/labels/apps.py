@@ -10,8 +10,8 @@ class LabelsConfig(AppConfig):
     def ready(self):
         from django.db.models.signals import pre_delete
 
-        from task_manager.labels.models import Labels
+        from task_manager.labels.models import Label
         from task_manager.labels.signals import (
             prevent_delete_of_related_labels,
         )
-        pre_delete.connect(prevent_delete_of_related_labels, sender=Labels)
+        pre_delete.connect(prevent_delete_of_related_labels, sender=Label)

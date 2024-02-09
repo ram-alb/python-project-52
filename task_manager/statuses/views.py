@@ -6,7 +6,7 @@ from django.utils.translation import gettext
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from task_manager.statuses.forms import StatusCreationForm
-from task_manager.statuses.models import Statuses
+from task_manager.statuses.models import Status
 from task_manager.utils.tm_utils import (
     TaskManagerFormValidMixin,
     TaskManagerLoginMixin,
@@ -16,7 +16,7 @@ from task_manager.utils.tm_utils import (
 class StatusesMixin(TaskManagerLoginMixin, TaskManagerFormValidMixin):
     """Mixin class for status views."""
 
-    model = Statuses
+    model = Status
     success_url = reverse_lazy('statuses_list')
 
 

@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from task_manager.labels.models import Labels
-from task_manager.statuses.models import Statuses
-from task_manager.tasks.models import Tasks
+from task_manager.labels.models import Label
+from task_manager.statuses.models import Status
+from task_manager.tasks.models import Task
 from task_manager.utils.fixtures import test_message, test_unauthenticated_user
 
 
@@ -18,9 +18,9 @@ class BaseSetup(TestCase):
     def setUp(self):
         self.author = User.objects.get(pk=1)
         self.executor = User.objects.get(pk=2)
-        self.status = Statuses.objects.get(pk=1)
-        self.used_label = Labels.objects.get(pk=1)
-        self.task = Tasks.objects.get(pk=1)
+        self.status = Status.objects.get(pk=1)
+        self.used_label = Label.objects.get(pk=1)
+        self.task = Task.objects.get(pk=1)
 
         self.labels_list_url = reverse('labels_list')
 
@@ -42,7 +42,7 @@ class LabelsListViewTest(BaseSetup):
     """Test case class for the LabelsListView."""
 
     def test_labels_list_view_with_authenticated_user(self):
-        labels = Labels.objects.all()
+        labels = Label.objects.all()
         label_names = [label.name for label in labels]
 
         response = self.client.get(self.labels_list_url)
@@ -77,10 +77,10 @@ class CreateLabelViewTest(BaseSetup):
         self.assertContains(response, 'Создать метку')
 
     def test_create_label_view_valid_form(self):
-        old_count = Labels.objects.all().count()
+        old_count = Label.objects.all().count()
         response = self.client.post(self.url, data=self.valid_form)
-        label = Labels.objects.last()
-        new_count = Labels.objects.all().count()
+        label = Label.objects.last()
+        new_count = Label.objects.all().count()
 
         self.assertRedirects(response, self.labels_list_url)
         self.test_message(response, 'Метка успешно создана')
@@ -88,9 +88,9 @@ class CreateLabelViewTest(BaseSetup):
         self.assertEqual(new_count, old_count + 1)
 
     def test_create_label_view_invalid_form(self):
-        old_count = Labels.objects.all().count()
+        old_count = Label.objects.all().count()
         response = self.client.post(self.url, data=self.invalid_form)
-        new_count = Labels.objects.all().count()
+        new_count = Label.objects.all().count()
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(old_count, new_count)
@@ -115,10 +115,10 @@ class UpdateLabelViewTest(BaseSetup):
         self.assertContains(response, 'Изменение метки')
 
     def test_update_label_view_valid_form(self):
-        old_count = Labels.objects.all().count()
+        old_count = Label.objects.all().count()
         response = self.client.post(self.url, data=self.valid_form)
-        new_count = Labels.objects.all().count()
-        label = Labels.objects.get(pk=self.used_label.pk)
+        new_count = Label.objects.all().count()
+        label = Label.objects.get(pk=self.used_label.pk)
 
         self.assertRedirects(response, self.labels_list_url)
         self.test_message(response, 'Метка успешно изменена')
@@ -126,9 +126,9 @@ class UpdateLabelViewTest(BaseSetup):
         self.assertEqual(label.name, self.valid_form['name'])
 
     def test_update_label_view_invalid_form(self):
-        old_count = Labels.objects.all().count()
+        old_count = Label.objects.all().count()
         response = self.client.post(self.url, data=self.invalid_form)
-        new_count = Labels.objects.all().count()
+        new_count = Label.objects.all().count()
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(old_count, new_count)
@@ -160,11 +160,11 @@ class DeleteLabelViewTest(BaseSetup):
         )
 
     def test_delete_label_valid_form(self):
-        old_count = Labels.objects.all().count()
-        not_used_label = Labels.objects.get(pk=2)
+        old_count = Label.objects.all().count()
+        not_used_label = Label.objects.get(pk=2)
         url = reverse('delete_label', kwargs={'pk': not_used_label.pk})
         response = self.client.post(url)
-        new_count = Labels.objects.all().count()
+        new_count = Label.objects.all().count()
 
         self.assertRedirects(response, self.labels_list_url)
         self.test_message(response, 'Метка успешно удалена')

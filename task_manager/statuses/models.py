@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Statuses(models.Model):
+class Status(models.Model):
     """Model representing a status."""
 
     name = models.CharField(max_length=100)

@@ -7,7 +7,7 @@ from django_filters.views import FilterView
 
 from task_manager.tasks.filters import TasksFilter
 from task_manager.tasks.forms import TaskCreationForm
-from task_manager.tasks.models import Tasks
+from task_manager.tasks.models import Task
 from task_manager.utils.tm_utils import (
     TaskManagerFormValidMixin,
     TaskManagerLoginMixin,
@@ -17,7 +17,7 @@ from task_manager.utils.tm_utils import (
 class TasksMixin(TaskManagerLoginMixin, TaskManagerFormValidMixin):
     """Mixin class that provides common functionality for task-related views."""
 
-    model = Tasks
+    model = Task
     success_url = reverse_lazy('tasks_list')
 
 

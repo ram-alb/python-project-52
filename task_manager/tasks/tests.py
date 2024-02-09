@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from task_manager.labels.models import Labels
-from task_manager.statuses.models import Statuses
-from task_manager.tasks.models import Tasks
+from task_manager.labels.models import Label
+from task_manager.statuses.models import Status
+from task_manager.tasks.models import Task
 from task_manager.utils.fixtures import test_message, test_unauthenticated_user
 
 
@@ -17,10 +17,10 @@ class BaseSetup(TestCase):
 
     def setUp(self):
         self.tasks_list_url = reverse('tasks_list')
-        self.task = Tasks.objects.get(pk=1)
+        self.task = Task.objects.get(pk=1)
         self.author = User.objects.get(pk=1)
         self.executor = User.objects.get(pk=2)
-        self.status = Statuses.objects.get(pk=1)
+        self.status = Status.objects.get(pk=1)
         self.valid_data = {
             'name': 'New Task',
             'description': 'new task description',
@@ -43,7 +43,7 @@ class TasksListViewTest(BaseSetup):
     """Test case class for the TasksListView."""
 
     def test_tasks_list_view_with_authenticated_user(self):
-        tasks = Tasks.objects.all()
+        tasks = Task.objects.all()
         task_names = [task.name for task in tasks]
 
         response = self.client.get(self.tasks_list_url)
@@ -77,10 +77,10 @@ class CreateTaskViewTest(BaseSetup):
         self.assertContains(response, 'Создать задачу')
 
     def test_create_task_view_valid_form(self):
-        tasks_old = Tasks.objects.all().count()
+        tasks_old = Task.objects.all().count()
         response = self.client.post(self.url, data=self.valid_data)
-        tasks_new = Tasks.objects.all().count()
-        task = Tasks.objects.last()
+        tasks_new = Task.objects.all().count()
+        task = Task.objects.last()
 
         self.assertRedirects(response, self.tasks_list_url)
         self.test_message(response, 'Задача успешно создана')
@@ -88,9 +88,9 @@ class CreateTaskViewTest(BaseSetup):
         self.assertEqual(tasks_new, tasks_old + 1)
 
     def test_create_task_view_invalid_form(self):
-        tasks_count_old = Tasks.objects.all().count()
+        tasks_count_old = Task.objects.all().count()
         response = self.client.post(self.url, data=self.invalid_data)
-        tasks_count_new = Tasks.objects.all().count()
+        tasks_count_new = Task.objects.all().count()
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertContains(response, 'Создать задачу')
@@ -115,10 +115,10 @@ class UpdateTaskViewTest(BaseSetup):
         self.assertContains(response, 'Изменение задачи')
 
     def test_update_task_view_valid_form(self):
-        old_count = Tasks.objects.all().count()
+        old_count = Task.objects.all().count()
         response = self.client.post(self.url, data=self.valid_data)
-        task_name = Tasks.objects.get(pk=self.task.pk).name
-        new_count = Tasks.objects.all().count()
+        task_name = Task.objects.get(pk=self.task.pk).name
+        new_count = Task.objects.all().count()
 
         self.assertRedirects(response, self.tasks_list_url)
         self.test_message(response, 'Задача успешно изменена')
@@ -126,9 +126,9 @@ class UpdateTaskViewTest(BaseSetup):
         self.assertEqual(old_count, new_count)
 
     def test_update_task_view_invalid_form(self):
-        old_count = Tasks.objects.all().count()
+        old_count = Task.objects.all().count()
         response = self.client.post(self.url, data=self.invalid_data)
-        new_count = Tasks.objects.all().count()
+        new_count = Task.objects.all().count()
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertContains(response, 'Изменение задачи')
@@ -159,9 +159,9 @@ class DeleteTaskViewTest(BaseSetup):
         )
 
     def test_delete_task_valid_form(self):
-        old_count = Tasks.objects.all().count()
+        old_count = Task.objects.all().count()
         response = self.client.post(self.url)
-        new_count = Tasks.objects.all().count()
+        new_count = Task.objects.all().count()
 
         self.assertRedirects(response, self.tasks_list_url)
         self.test_message(response, 'Задача успешно удалена')
@@ -176,11 +176,11 @@ class TasksFilterTestCase(TestCase):
     def setUp(self):
         self.user1 = User.objects.get(pk=1)
         self.user2 = User.objects.get(pk=2)
-        self.status1 = Statuses.objects.get(pk=1)
-        self.status2 = Statuses.objects.get(pk=2)
-        self.label = Labels.objects.get(pk=1)
-        self.task1 = Tasks.objects.get(pk=1)
-        self.task2 = Tasks.objects.get(pk=2)
+        self.status1 = Status.objects.get(pk=1)
+        self.status2 = Status.objects.get(pk=2)
+        self.label = Label.objects.get(pk=1)
+        self.task1 = Task.objects.get(pk=1)
+        self.task2 = Task.objects.get(pk=2)
         self.url = reverse('tasks_list')
         self.client = Client()
         self.client.force_login(self.user1)

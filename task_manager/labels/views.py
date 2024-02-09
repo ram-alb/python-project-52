@@ -6,7 +6,7 @@ from django.utils.translation import gettext
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from task_manager.labels.forms import LabelCreattionForm
-from task_manager.labels.models import Labels
+from task_manager.labels.models import Label
 from task_manager.utils.tm_utils import (
     TaskManagerFormValidMixin,
     TaskManagerLoginMixin,
@@ -16,7 +16,7 @@ from task_manager.utils.tm_utils import (
 class LabelsMixin(TaskManagerLoginMixin, TaskManagerFormValidMixin):
     """Mixin class provides common functionality for labels-related views."""
 
-    model = Labels
+    model = Label
     success_url = reverse_lazy('labels_list')
 
 

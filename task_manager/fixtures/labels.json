@@ -1,6 +1,6 @@
 [
 {
-  "model": "labels.labels",
+  "model": "labels.label",
   "pk": 1,
   "fields": {
     "name": "urgent",
@@ -8,7 +8,7 @@
   }
 },
 {
-  "model": "labels.labels",
+  "model": "labels.label",
   "pk": 2,
   "fields": {
     "name": "important",
@@ -16,7 +16,7 @@
   }
 },
 {
-  "model": "labels.labels",
+  "model": "labels.label",
   "pk": 3,
   "fields": {
     "name": "preferably",

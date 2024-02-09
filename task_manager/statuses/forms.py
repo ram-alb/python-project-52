@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from task_manager.statuses.models import Statuses
+from task_manager.statuses.models import Status
 
 
 class StatusCreationForm(forms.ModelForm):
@@ -14,5 +14,5 @@ class StatusCreationForm(forms.ModelForm):
     )
 
     class Meta:
-        model = Statuses
+        model = Status
         fields = ['name']

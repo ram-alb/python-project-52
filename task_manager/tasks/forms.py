@@ -1,9 +1,9 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from task_manager.labels.models import Labels
-from task_manager.statuses.models import Statuses
-from task_manager.tasks.models import Tasks
+from task_manager.labels.models import Label
+from task_manager.statuses.models import Status
+from task_manager.tasks.models import Task
 from task_manager.users.models import CustomUser
 
 
@@ -26,7 +26,7 @@ class TaskCreationForm(forms.ModelForm):
     )
     status = forms.ModelChoiceField(
         label=_('Status'),
-        queryset=Statuses.objects.all(),
+        queryset=Status.objects.all(),
     )
     executor = forms.ModelChoiceField(
         label=_('Executor'),
@@ -35,9 +35,9 @@ class TaskCreationForm(forms.ModelForm):
     labels = forms.ModelMultipleChoiceField(
         label=_('Labels'),
         required=False,
-        queryset=Labels.objects.all(),
+        queryset=Label.objects.all(),
     )
 
     class Meta:
-        model = Tasks
+        model = Task
         fields = ['name', 'description', 'status', 'executor', 'labels']

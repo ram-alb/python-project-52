@@ -1,9 +1,9 @@
 import django_filters
 from django import forms
 
-from task_manager.labels.models import Labels
-from task_manager.statuses.models import Statuses
-from task_manager.tasks.models import Tasks
+from task_manager.labels.models import Label
+from task_manager.statuses.models import Status
+from task_manager.tasks.models import Task
 from task_manager.users.models import CustomUser
 
 
@@ -12,7 +12,7 @@ class TasksFilter(django_filters.FilterSet):
 
     status = django_filters.ModelChoiceFilter(
         label='',
-        queryset=Statuses.objects.all(),
+        queryset=Status.objects.all(),
         to_field_name='id',
         widget=forms.Select(attrs={'class': 'form-control'}),
     )
@@ -24,13 +24,13 @@ class TasksFilter(django_filters.FilterSet):
     )
     labels = django_filters.ModelChoiceFilter(
         label='',
-        queryset=Labels.objects.all(),
+        queryset=Label.objects.all(),
         to_field_name='id',
         widget=forms.Select(attrs={'class': 'form-control'}),
     )
 
     class Meta:
-        model = Tasks
+        model = Task
         fields = ['status', 'executor', 'labels']
 
     @property
