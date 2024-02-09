@@ -35,6 +35,7 @@ class TasksFilter(django_filters.FilterSet):
 
     @property
     def qs(self):
+        """Return the queryset that will be used to display Task objects."""
         parent = super().qs
         self_tasks = self.request.GET.get('self_tasks')
         user = self.request.user
@@ -43,6 +44,7 @@ class TasksFilter(django_filters.FilterSet):
         return parent
 
     def is_valid(self):
+        """Check if the form associated with the filter is valid."""
         if self.form.is_valid():
             for field_name, field in self.form.fields.items():
                 if field_name in self.form.cleaned_data:
