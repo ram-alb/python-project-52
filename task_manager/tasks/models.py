@@ -10,7 +10,7 @@ max_length = 150
 class Task(models.Model):
     """Model representing a task."""
 
-    name = models.CharField(max_length=max_length)
+    name = models.CharField(max_length=max_length, unique=True)
     description = models.TextField()
     status = models.ForeignKey(Status, on_delete=models.PROTECT)
     author = models.ForeignKey(
