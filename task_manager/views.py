@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
-from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
 
@@ -22,7 +22,7 @@ class UserLoginView(LoginView):
 
     def form_valid(self, form):
         """Handle a valid form submission."""
-        messages.success(self.request, gettext('You are logged in'))
+        messages.success(self.request, _('You are logged in'))
         return super().form_valid(form)
 
 
@@ -33,5 +33,5 @@ class UserLogoutView(LogoutView):
 
     def dispatch(self, request, *args, **kwargs):
         """Dispatch method for logging the user out."""
-        messages.success(self.request, gettext('You are logged out'))
+        messages.success(self.request, _('You are logged out'))
         return super().dispatch(request, *args, **kwargs)

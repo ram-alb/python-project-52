@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 
 
 class TaskManagerLoginMixin(LoginRequiredMixin):
@@ -14,7 +14,7 @@ class TaskManagerLoginMixin(LoginRequiredMixin):
         """Handle the case when the user does not signed in."""
         messages.error(
             self.request,
-            gettext('You are not signed in! Please, sign in'),
+            _('You are not signed in! Please, sign in'),
         )
         return super().handle_no_permission()
 
@@ -27,6 +27,6 @@ class TaskManagerFormValidMixin(object):
         response = super().form_valid(form)
         messages.success(
             self.request,
-            gettext(self.success_message),
+            _(self.success_message),
         )
         return response

@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 from django_filters.views import FilterView
 
@@ -33,7 +33,7 @@ class CreateTaskView(TasksMixin, CreateView):
 
     form_class = TaskCreationForm
     template_name = 'tasks/create_task.html'
-    success_message = gettext('The task was successfully created')
+    success_message = _('The task was successfully created')
 
     def form_valid(self, form):
         """Handle the case when the form is valid."""
@@ -47,20 +47,20 @@ class UpdateTaskView(TasksMixin, UpdateView):
     success_url = reverse_lazy('tasks_list')
     form_class = TaskCreationForm
     template_name = 'tasks/update_task.html'
-    success_message = gettext('The task was successfully updated')
+    success_message = _('The task was successfully updated')
 
 
 class DeleteTaskView(TasksMixin, DeleteView):
     """A view for deleting a task."""
 
     success_url = reverse_lazy('tasks_list')
-    success_message = gettext("The task was successfully deleted")
+    success_message = _("The task was successfully deleted")
     template_name = 'tasks/delete_task.html'
 
     def get_context_data(self, **kwargs):
         """Return context for the delete task view."""
         context = super().get_context_data(**kwargs)
-        message = gettext(
+        message = _(
             'Are you sure you want to delete the %s?',
         ) % self.object
         context['message'] = message
@@ -73,7 +73,7 @@ class DeleteTaskView(TasksMixin, DeleteView):
         if self.object.author != self.request.user:
             messages.error(
                 self.request,
-                gettext('Only the author can delete the task'),
+                _('Only the author can delete the task'),
             )
             return redirect('tasks_list')
 

@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.db.models.deletion import ProtectedError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from task_manager.statuses.forms import StatusCreationForm
@@ -29,7 +29,7 @@ class StatusesListView(StatusesMixin, ListView):
 class CreateStatusView(StatusesMixin, CreateView):
     """View for creating a new status."""
 
-    success_message = gettext('The status was successfully created')
+    success_message = _('The status was successfully created')
     template_name = 'statuses/create_status.html'
     form_class = StatusCreationForm
 
@@ -37,7 +37,7 @@ class CreateStatusView(StatusesMixin, CreateView):
 class UpdateStatusView(StatusesMixin, UpdateView):
     """View for updating an existing status."""
 
-    success_message = gettext('The status was successfully updated')
+    success_message = _('The status was successfully updated')
     template_name = 'statuses/update_status.html'
     form_class = StatusCreationForm
 
@@ -46,13 +46,13 @@ class DeleteStatusView(StatusesMixin, DeleteView):
     """View for deleting a status."""
 
     template_name = 'statuses/delete_status.html'
-    success_message = gettext("The status was successfully deleted")
+    success_message = _("The status was successfully deleted")
 
     def get_context_data(self, **kwargs):
         """Return context for deleting a status view."""
         context = super().get_context_data(**kwargs)
         status_name = self.object.name
-        message = gettext(
+        message = _(
             'Are you sure you want to delete the %s?',
         ) % status_name
         context['message'] = message
@@ -64,7 +64,7 @@ class DeleteStatusView(StatusesMixin, DeleteView):
         except ProtectedError:
             messages.error(
                 self.request,
-                gettext(
+                _(
                     'It is not possible to delete the status '
                     'because it is being used',
                 ),
