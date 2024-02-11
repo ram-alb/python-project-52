@@ -9,4 +9,4 @@ class CustomUser(User):
 
     def __str__(self):
         """Return a string representation of the user."""
-        return f'{self.first_name} {self.last_name}'
+        return self.get_full_name()
