@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-27 11:44+0600\n"
+"POT-Creation-Date: 2024-02-14 11:20+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,12 +20,16 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: labels/forms.py:11 labels/forms.py:13 statuses/forms.py:11
-#: statuses/forms.py:13 tasks/forms.py:14 tasks/forms.py:16
+#: labels/forms.py:12 labels/forms.py:14 statuses/forms.py:12
+#: statuses/forms.py:14 tasks/forms.py:15 tasks/forms.py:17
 #: templates/labels/labels_list.html:14
 #: templates/statuses/statuses_list.html:14 templates/tasks/tasks_list.html:62
 msgid "Name"
 msgstr "Имя"
+
+#: labels/forms.py:21
+msgid "Label with this name already exists."
+msgstr "Метка с таким именем уже существует."
 
 #: labels/views.py:34
 msgid "The label was successfully created"
@@ -48,6 +52,10 @@ msgstr "Невозможно удалить метку, потому что он
 msgid "The label was successfully updated"
 msgstr "Метка успешно изменена"
 
+#: statuses/forms.py:21
+msgid "Status with this name already exists."
+msgstr "Статус с таким именем уже существует."
+
 #: statuses/views.py:32
 msgid "The status was successfully created"
 msgstr "Статус успешно создан"
@@ -64,23 +72,27 @@ msgstr "Статус успешно удален"
 msgid "It is not possible to delete the status because it is being used"
 msgstr "Невозможно удалить статус, потому что он используется"
 
-#: tasks/forms.py:21
+#: tasks/forms.py:20 tasks/forms.py:23
 msgid "Description"
 msgstr "Описание"
 
-#: tasks/forms.py:27 templates/tasks/task_detail.html:29
+#: tasks/forms.py:29 templates/tasks/task_detail.html:31
 #: templates/tasks/tasks_list.html:15 templates/tasks/tasks_list.html:63
 msgid "Status"
 msgstr "Статус"
 
-#: tasks/forms.py:31 templates/tasks/task_detail.html:24
+#: tasks/forms.py:33 templates/tasks/task_detail.html:24
 #: templates/tasks/tasks_list.html:22 templates/tasks/tasks_list.html:65
 msgid "Executor"
 msgstr "Исполнитель"
 
-#: tasks/forms.py:35 templates/base.html:34 templates/labels/labels_list.html:7
+#: tasks/forms.py:38 templates/base.html:34 templates/labels/labels_list.html:7
 msgid "Labels"
 msgstr "Метки"
+
+#: tasks/forms.py:47
+msgid "Task with this name already exists."
+msgstr "Задача с таким именем уже существует."
 
 #: tasks/views.py:36
 msgid "The task was successfully created"
@@ -169,15 +181,15 @@ msgstr "Дата создания"
 
 #: templates/labels/labels_list.html:26 templates/labels/update_label.html:12
 #: templates/statuses/statuses_list.html:26
-#: templates/statuses/update_status.html:12 templates/tasks/task_detail.html:43
-#: templates/tasks/tasks_list.html:80 templates/tasks/update_task.html:12
+#: templates/statuses/update_status.html:12 templates/tasks/task_detail.html:55
+#: templates/tasks/tasks_list.html:84 templates/tasks/update_task.html:12
 #: templates/users/update_user.html:11 templates/users/user_list.html:25
 msgid "Update"
 msgstr "Изменить"
 
 #: templates/labels/labels_list.html:27
-#: templates/statuses/statuses_list.html:27 templates/tasks/task_detail.html:45
-#: templates/tasks/tasks_list.html:81 templates/users/user_list.html:26
+#: templates/statuses/statuses_list.html:27 templates/tasks/task_detail.html:57
+#: templates/tasks/tasks_list.html:85 templates/users/user_list.html:26
 msgid "Delete"
 msgstr "Удалить"
 
@@ -218,7 +230,7 @@ msgstr "Просмотр задачи"
 msgid "Author"
 msgstr "Автор"
 
-#: templates/tasks/task_detail.html:34
+#: templates/tasks/task_detail.html:36
 msgid "Creation date"
 msgstr "Дата создания"
 

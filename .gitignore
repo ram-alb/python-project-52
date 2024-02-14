@@ -12,3 +12,4 @@ htmlcov/
 *.bak
 .coverage
 env/
+.DS_Store
